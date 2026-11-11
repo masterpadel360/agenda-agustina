@@ -90,7 +90,7 @@ try {
   await ev('localStorage.clear(); sessionStorage.clear()');
   await ir('reservar.html');
   chk('inicio: se ve el logo, la firma y las 6 emociones', await ev(`!!document.querySelector('img.logo') && document.body.textContent.includes('Lic. Agustina Arrieta') && document.querySelectorAll('.group6 svg').length===6`));
-  chk('inicio: reglas visibles antes de reservar', (await texto()).includes('La seña no se devuelve nunca'));
+  chk('inicio: reglas visibles antes de reservar', (await texto()).includes('La seña es NO REEMBOLSABLE'));
   await captura('01-reservas-inicio');
   await click('[data-acc=empezar]');
   await click('[data-acc=modalidad][data-id=presencial]');
