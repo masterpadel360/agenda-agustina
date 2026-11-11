@@ -148,10 +148,11 @@ svg.i{width:20px;height:20px;flex:none}
 /* barra de abajo (panel) */
 .nav{position:fixed;left:50%;transform:translateX(-50%);width:100%;max-width:480px;bottom:0;height:calc(86px + env(safe-area-inset-bottom));z-index:20}
 .nav svg.bg{position:absolute;inset:0;width:100%;height:100%}
-.nav .items{position:absolute;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(6,1fr);justify-items:center;align-items:end;padding:0}
-.nav a{display:flex;flex-direction:column;align-items:center;gap:3px;font:700 9.5px "Quicksand",sans-serif;color:#A79DB0;width:100%;text-decoration:none;text-align:center}
+.nav .items{position:absolute;left:0;right:0;bottom:calc(12px + env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1fr 76px 1fr 1fr;align-items:end;padding:0 8px}
+.nav a{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:46px;font:700 10.5px/1 "Quicksand",sans-serif;color:#A79DB0;width:100%;text-decoration:none;text-align:center;white-space:nowrap}
+.nav a svg{width:23px;height:23px;flex:none}
 .nav a.on{color:var(--orange)}
-.nav .mid{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--orange2),var(--orange));color:#fff;display:grid;place-items:center;box-shadow:0 8px 18px rgba(138,104,222,.35);margin-bottom:10px;border:0;cursor:pointer}
+.nav .mid{justify-self:center;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--orange2),var(--orange));color:#fff;display:grid;place-items:center;box-shadow:0 8px 18px rgba(138,104,222,.35);margin-bottom:16px;border:0;cursor:pointer}
 
 /* hoja que sube desde abajo */
 .capa{position:fixed;inset:0;background:rgba(59,45,71,.32);z-index:40;display:flex;align-items:flex-end;justify-content:center}
@@ -172,3 +173,14 @@ svg.i{width:20px;height:20px;flex:none}
 .vacio{text-align:center;padding:10px 0 4px}
 .vacio h3{font:700 22px "Quicksand",sans-serif;margin:6px 0 2px}
 .wrapword{overflow-wrap:anywhere}
+
+/* Barra de arriba (panel): logo a la izquierda, Ajustes (engranaje) a la derecha, en todas las secciones */
+.topbar{position:sticky;top:0;z-index:15;display:flex;align-items:center;justify-content:space-between;padding:calc(6px + env(safe-area-inset-top)) 14px 6px 18px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid #F1EBF4}
+.topbar-logo{height:22px;width:auto;opacity:.85}
+.topbar-gear{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#7A6E86;background:#F6F2FB}
+.topbar-gear svg{width:22px;height:22px}
+.topbar-gear.on{color:#fff;background:var(--orange)}
+/* con la barra de arriba, el resto ya no necesita dejar lugar para el notch */
+.app.con-nav .hero{padding-top:18px}
+.app.con-nav .topbar + .body{padding-top:16px !important}
+.app.con-nav .body{padding-bottom:calc(110px + env(safe-area-inset-bottom))}

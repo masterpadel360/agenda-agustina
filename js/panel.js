@@ -39,8 +39,8 @@ const avisoTxt = (m) => (m == null ? '' : m === 0 ? 'Aviso a la hora' : m === 14
 
 function navBar(activo) {
   const it = (r, i, t) => `<a href="#${r}" class="${activo === r ? 'on' : ''}">${ico(i)}${t}</a>`;
-  return `<nav class="nav" aria-label="Secciones"><svg class="bg" viewBox="0 0 360 86" preserveAspectRatio="none" aria-hidden="true"><path d="M0 26H100C120 26 122 2 150 2S180 26 200 26H360V86H0z" fill="#fff"/><path d="M0 26H100C120 26 122 2 150 2S180 26 200 26H360" fill="none" stroke="#EFE9F1" stroke-width="1.5"/></svg>
-    <div class="items">${it('hoy', 'home', 'Hoy')}${it('semana', 'cal', 'Semana')}<button class="mid" data-acc="mas" aria-label="${activo === 'vida' ? 'Nuevo evento' : 'Cargar turno'}">${ico('plus')}</button>${it('pacientes', 'users', 'Pacientes')}${it('vida', 'heart', 'Mi vida')}${it('ajustes', 'gear', 'Ajustes')}</div></nav>`;
+  return `<nav class="nav" aria-label="Secciones"><svg class="bg" viewBox="0 0 360 86" preserveAspectRatio="none" aria-hidden="true"><path d="M0 26H130C150 26 152 2 180 2S210 26 230 26H360V86H0z" fill="#fff"/><path d="M0 26H130C150 26 152 2 180 2S210 26 230 26H360" fill="none" stroke="#EFE9F1" stroke-width="1.5"/></svg>
+    <div class="items">${it('hoy', 'home', 'Hoy')}${it('semana', 'cal', 'Semana')}<button class="mid" data-acc="mas" aria-label="${activo === 'vida' ? 'Nuevo evento' : 'Cargar turno'}">${ico('plus')}</button>${it('pacientes', 'users', 'Pacientes')}${it('vida', 'heart', 'Mi vida')}</div></nav>`;
 }
 const back = (href, txt) => `<a class="pillbtn" href="${href}">${ico('back')}${esc(txt)}</a>`;
 
@@ -827,8 +827,10 @@ function render() {
   else if (r === 'notifs') html = V.notifs();
   else if (r === 'ajustes') html = (V[a ? `ajustes/${a}` : 'ajustes'] || V.ajustes)();
   else html = V.hoy();
+  const conNav = html.includes('class="nav"');
+  if (conNav) html = `<header class="topbar"><img src="logo/logo.svg" alt="RESET" class="topbar-logo"><a href="#ajustes" class="topbar-gear${r === 'ajustes' ? ' on' : ''}" aria-label="Ajustes">${ico('gear')}</a></header>` + html;
   $app.innerHTML = html;
-  $app.classList.toggle('con-nav', html.includes('class="nav"'));
+  $app.classList.toggle('con-nav', conNav);
   ponerDemoBar();
   if (r === 'recordar') pintarRecordatorio(a);
   if (r === 'ajustes' && a === 'recordatorio') { dibujarPrevAjustes(); prevTextoRec(); }
