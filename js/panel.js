@@ -717,7 +717,7 @@ function mensajeReservas() {
     `4️⃣ Transferís la seña${a.alias ? ` al alias *${a.alias}*` : ''} y subís el comprobante. ¡Y listo!`,
     '',
     '📌 *Tené en cuenta*',
-    '• La seña no se reembolsa.',
+    '• La seña es *NO REEMBOLSABLE*.',
     '• Para cambiar o cancelar el turno, escribime por acá.',
     '',
     'Cualquier duda, consultame. ¡Te espero! 💜',

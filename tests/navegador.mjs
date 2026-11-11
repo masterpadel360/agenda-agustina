@@ -137,7 +137,7 @@ try {
   await click('[data-acc=confirmar]');
   await hasta(`document.body.textContent.includes('¡Listo, Valentina!')`);
   const listo = await texto();
-  chk('confirmación con reglas y botón de WhatsApp', listo.includes('La seña no se devuelve') && listo.includes('Cambiar o cancelar por WhatsApp') && !listo.includes('Ver o cambiar') && listo.includes('Seña en revisión'));
+  chk('confirmación con reglas y botón de WhatsApp', listo.includes('NO REEMBOLSABLE') && listo.includes('Cambiar o cancelar por WhatsApp') && !listo.includes('Ver o cambiar') && listo.includes('Seña en revisión'));
   await captura('07-reservas-confirmacion');
   const demo = await ev(`(()=>{const s=JSON.parse(localStorage.getItem('agustina-demo-v1'));const t=s.turnos.find(x=>x.inicio===${iniElegido}&&x.estado==='reservado');return {t, ret:s.retenciones.length, p:s.pacientes.find(p=>p.id===t.paciente_id), n:s.notificaciones.map(n=>n.tipo)}})()`);
   chk('turno creado con comprobante y seña por revisar', demo.t && demo.t.sena === 'por_revisar' && !!demo.t.comprobante);

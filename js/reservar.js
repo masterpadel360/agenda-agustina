@@ -28,7 +28,7 @@ const pasoTxt = (n) => `<span class="caps muted">Paso ${n} de 5</span>`;
 
 function reglasHtml(info) {
   return `<div class="card" style="padding:6px 16px">
-    <div class="regla sm"><span class="n" style="background:var(--peach1);color:#B4592A">1</span><span class="g"><b>La seña no se devuelve nunca.</b></span></div>
+    <div class="regla sm"><span class="n" style="background:var(--peach1);color:#B4592A">1</span><span class="g"><b>La seña es NO REEMBOLSABLE.</b></span></div>
     <div class="regla sm"><span class="n" style="background:var(--lav1);color:#6E58B0">2</span><span class="g"><b>Para cambiar o cancelar el turno, escribile a Agustina por WhatsApp.</b> Desde acá no se puede.</span></div>
     <div class="regla sm"><span class="n" style="background:#E3F3E8;color:var(--ok)">3</span><span class="g"><b>Para cancelar, escribile a Agustina</b> por WhatsApp. Desde acá no se puede cancelar.</span></div>
   </div>`;
@@ -209,7 +209,7 @@ P_.listo = () => {
     <div class="body">
       ${tarjetaTurno(t)}
       ${t.link_videollamada ? `<a class="cta white" style="margin:0 0 14px" href="${esc(t.link_videollamada)}" target="_blank" rel="noopener">${ico('video')}Link de la videollamada</a>` : ''}
-      <p class="xs" style="margin:0 6px">La seña no se devuelve · para <b>cambiar o cancelar</b> el turno, escribile a Agustina por WhatsApp.</p>
+      <p class="xs" style="margin:0 6px">La seña es <b>NO REEMBOLSABLE</b> · para <b>cambiar o cancelar</b> el turno, escribile a Agustina por WhatsApp.</p>
       <div class="card flat" style="margin-top:14px">
         <div class="caps muted">Guardá tu link</div>
         <div class="sm" style="margin:4px 0 10px">Con este link ves tu turno cuando quieras.</div>
@@ -237,7 +237,7 @@ P_.miturno = () => {
       ${!cancelado && !t.comprobante && t.sena !== 'confirmada' && !pasado ? `<div class="card aviso"><div class="sm"><b>Seña: $ ${L.precio(t.sena_monto)}</b> al alias <b>${esc(t.alias)}</b></div><button class="cta chico white" style="margin-top:10px" data-acc="ir-comprobante">${ico('upload')}Subir el comprobante</button></div>` : ''}
       ${cancelado || pasado ? '' : `<div class="card flat" style="display:flex;gap:10px;align-items:center">${emo('alegria', 58, 'flex:none')}<div class="sm"><b>¿Necesitás cambiar el día u horario?</b><br>Escribile a Agustina por WhatsApp y lo coordinan.</div></div>`}
       <a class="cta wa" style="margin-top:10px" href="${waCancelar(t)}" target="_blank" rel="noopener">${ico('chat')}${cancelado ? 'Escribirle a Agustina' : 'Cambiar o cancelar por WhatsApp'}</a>
-      <p class="xs muted center" style="margin:14px 0 0">La seña no se devuelve. Para cambiar o cancelar, hablá con Agustina.</p>
+      <p class="xs muted center" style="margin:14px 0 0">La seña es NO REEMBOLSABLE. Para cambiar o cancelar, hablá con Agustina.</p>
     </div>`;
 };
 
