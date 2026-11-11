@@ -1,6 +1,6 @@
 // Service worker: la app abre sin internet (lo último guardado) y recibe los avisos push.
 // Cambiar VERSION en cada cambio publicado.
-const VERSION = 'agustina-v4';
+const VERSION = 'agustina-v5';
 const FUENTES = 'agustina-fuentes';
 const ARCHIVOS = ['./', 'index.html', 'reservar.html', 'config.js', 'css/app.css', 'js/panel.js', 'js/reservar.js', 'js/logica.js', 'js/ui.js', 'js/sprite.js',
   'js/datos.js', 'js/datos-demo.js', 'js/datos-supabase.js', 'js/imagen-recordatorio.js', 'manifest.json', 'logo/logo.svg', 'logo/icono.svg',
@@ -25,7 +25,7 @@ self.addEventListener('fetch', (e) => {
   }
   if (u.origin !== location.origin) return;
   e.respondWith(
-    fetch(e.request).then((r) => {
+    fetch(e.request, { cache: 'no-cache' }).then((r) => {
       if (r.ok) { const copia = r.clone(); caches.open(VERSION).then((c) => c.put(e.request, copia)); }
       return r;
     }).catch(() => caches.match(e.request, { ignoreSearch: true }).then((r) => r || caches.match('index.html')))
