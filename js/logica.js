@@ -233,7 +233,7 @@ export function textoDiaImagen(ms) {
 }
 export const textoHoraImagen = (ms) => `${horaDe(ms)} hs`;
 // Dónde va el texto en la plantilla que viene con la app (fracciones del ancho/alto; medido sobre 1122×1402).
-export const IMG_RECORDATORIO = { dia_y: 0.4565, hora_y: 0.5474, x1: 0.262, x2: 0.8957, tam: 0.042, color: '#3E463B' };
+export const IMG_RECORDATORIO = { dia_y: 0.4565, hora_y: 0.5474, x1: 0.262, x2: 0.8957, tam: 0.036, color: '#3E463B' };
 
 export function llenarPlantilla(tpl, vars) {
   return String(tpl || '')

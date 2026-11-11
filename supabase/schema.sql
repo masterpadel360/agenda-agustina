@@ -43,7 +43,7 @@ create table if not exists public.ajustes (
 Si no podés asistir, avisame con al menos 24 horas de anticipación. De lo contrario, la sesión se abona igualmente.
 Gracias por comprender y valorar este espacio.' check (length(recordatorio_texto) <= 1000),
   recordatorio_imagen  text check (length(recordatorio_imagen) <= 200),   -- plantilla propia en el bucket "imagenes" (null = la que viene con la app)
-  recordatorio_img     jsonb not null default '{"dia_y":0.4565,"hora_y":0.5474,"x1":0.262,"x2":0.8957,"tam":0.042,"color":"#3E463B"}',  -- dónde se escriben día y hora (fracciones de la imagen)
+  recordatorio_img     jsonb not null default '{"dia_y":0.4565,"hora_y":0.5474,"x1":0.262,"x2":0.8957,"tam":0.036,"color":"#3E463B"}',  -- dónde se escriben día y hora (fracciones de la imagen)
   recordatorio_canal   text not null default 'whatsapp_manual' check (recordatorio_canal in ('whatsapp_manual', 'whatsapp_api')),
   resumen_hora         text not null default '08:00' check (resumen_hora ~ '^\d{2}:\d{2}$'),
   pendientes_hora      text not null default '20:00' check (pendientes_hora ~ '^\d{2}:\d{2}$'),
