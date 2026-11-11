@@ -77,6 +77,7 @@ export async function crearSupabase(cfg) {
     async sesion() { const { data } = await sb.auth.getSession(); return data.session ? { email: data.session.user.email } : null; },
     onSesion(cb) { sb.auth.onAuthStateChange((e) => { if (e === 'SIGNED_OUT') cb(); }); },
     async entrar(email, clave) { ok(await sb.auth.signInWithPassword({ email, password: clave })); return true; },
+    async cambiarClave(clave) { ok(await sb.auth.updateUser({ password: clave })); return true; },
     async salir() { await sb.auth.signOut(); return true; },
     async cargar() {
       const desde = new Date(Date.now() - 400 * 86400e3).toISOString();

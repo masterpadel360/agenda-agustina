@@ -1,6 +1,6 @@
 // Service worker: la app abre sin internet (lo último guardado) y recibe los avisos push.
 // Cambiar VERSION en cada cambio publicado.
-const VERSION = 'agustina-v1';
+const VERSION = 'agustina-v2';
 const FUENTES = 'agustina-fuentes';
 const ARCHIVOS = ['./', 'index.html', 'reservar.html', 'config.js', 'css/app.css', 'js/panel.js', 'js/reservar.js', 'js/logica.js', 'js/ui.js', 'js/sprite.js',
   'js/datos.js', 'js/datos-demo.js', 'js/datos-supabase.js', 'js/imagen-recordatorio.js', 'manifest.json', 'logo/logo.svg', 'logo/icono.svg',

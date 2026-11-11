@@ -11,6 +11,8 @@ import { dibujarRecordatorio, imagenRecordatorio, PLANTILLA_APP } from './imagen
 const $app = document.getElementById('app');
 const $capa = document.getElementById('capa');
 const CFG = window.AGUSTINA_CONFIG || {};
+// Link del mail "elegí tu contraseña" (Supabase lo manda con #...type=recovery).
+const RECUPERO = /type=(recovery|invite)/.test(location.hash);
 let D, P, S = null;
 const ui = { filtroPac: 'todos', buscar: '', vidaFiltro: 'todo', modHorario: 'presencial', hoja: null };
 
@@ -867,9 +869,23 @@ async function iniciar() {
     D = await crearCapaDatos(CFG);
     P = D.panel;
     P.onSesion(() => { S = null; render(); });
+    if (RECUPERO && P.cambiarClave && await P.sesion()) { history.replaceState(null, '', location.pathname); pantallaClave(); return; }
     await recargar();
   } catch (e) {
     $app.innerHTML = `${hero({ clase: 'lav', ancho: true, titulo: 'Uy, algo falló', sub: esc(e.message), personaje: 'tristeza' })}<div class="body"><button class="cta" onclick="location.reload()">Probar de nuevo</button></div>`;
   }
 }
+function pantallaClave() {
+  $app.innerHTML = `${hero({ clase: 'lav', ancho: true, titulo: 'Elegí tu contraseña', sub: 'Es la que vas a usar para entrar a Mi agenda.', personaje: 'alegria' })}
+  <div class="body" id="form-clave"><label class="inp"><small>Contraseña nueva (mínimo 8)</small><input data-k="c1" type="password" autocomplete="new-password"></label>
+  <label class="inp"><small>Repetila</small><input data-k="c2" type="password" autocomplete="new-password"></label><div id="clave-err"></div><button class="cta" data-acc="guardar-clave">Guardar y entrar</button></div>`;
+}
+A['guardar-clave'] = async (b) => {
+  const f = leerForm(document.getElementById('form-clave')); const err = document.getElementById('clave-err');
+  if (!f.c1 || f.c1.length < 8) { err.innerHTML = '<div class="err">Tiene que tener al menos 8 caracteres.</div>'; return; }
+  if (f.c1 !== f.c2) { err.innerHTML = '<div class="err">No coinciden.</div>'; return; }
+  b.disabled = true;
+  try { await P.cambiarClave(f.c1); toast('Contraseña guardada'); await recargar(); location.hash = '#hoy'; render(); }
+  catch (e) { err.innerHTML = `<div class="err">${esc(e.message)}</div>`; } finally { b.disabled = false; }
+};
 iniciar();
