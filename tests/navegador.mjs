@@ -137,7 +137,7 @@ try {
   await click('[data-acc=confirmar]');
   await hasta(`document.body.textContent.includes('¡Listo, Valentina!')`);
   const listo = await texto();
-  chk('confirmación con reglas y botón de WhatsApp', listo.includes('La seña no se devuelve') && listo.includes('Cancelar por WhatsApp') && listo.includes('Seña en revisión'));
+  chk('confirmación con reglas y botón de WhatsApp', listo.includes('La seña no se devuelve') && listo.includes('Cambiar o cancelar por WhatsApp') && !listo.includes('Ver o cambiar') && listo.includes('Seña en revisión'));
   await captura('07-reservas-confirmacion');
   const demo = await ev(`(()=>{const s=JSON.parse(localStorage.getItem('agustina-demo-v1'));const t=s.turnos.find(x=>x.inicio===${iniElegido}&&x.estado==='reservado');return {t, ret:s.retenciones.length, p:s.pacientes.find(p=>p.id===t.paciente_id), n:s.notificaciones.map(n=>n.tipo)}})()`);
   chk('turno creado con comprobante y seña por revisar', demo.t && demo.t.sena === 'por_revisar' && !!demo.t.comprobante);
@@ -156,28 +156,18 @@ try {
   await click('[data-acc=volver]');
   chk('volver a la modalidad: se libera la retención', await ev(`JSON.parse(localStorage.getItem('agustina-demo-v1')).retenciones.length===0`));
 
-  // ------------------------------------------------------------------ 2. Cambio con más de 24 h
-  console.log('2. Cambio con más de 24 h');
+  // ------------------------------------------------------------------ 2. Mi turno con más de 24 h: el paciente NO lo cambia solo
+  console.log('2. Mi turno (más de 24 h): sin cambio por la página');
   await ir('reservar.html?t=demo-turno-lejos-0001');
-  chk('mi turno: se puede cambiar', !!(await ev(`document.querySelector('[data-acc=cambiar]')`)));
+  const t2 = await texto();
+  chk('mi turno: sin botón de cambiar, con WhatsApp para cambiar o cancelar', !(await ev(`document.querySelector('[data-acc=cambiar]')`)) && t2.includes('Cambiar o cancelar por WhatsApp'));
   await captura('08-mi-turno-mas-de-24h');
-  const antes = await ev(`JSON.parse(localStorage.getItem('agustina-demo-v1')).turnos.find(t=>t.token==='demo-turno-lejos-0001').inicio`);
-  await click('[data-acc=cambiar]');
-  await hasta(`document.querySelector('.slot')`);
-  await ev(`document.querySelectorAll('.slot')[Math.min(2, document.querySelectorAll('.slot').length-1)].click()`);
-  await espera(200);
-  await captura('09-cambio-elegir-horario');
-  await click('[data-acc=seguir-dia]');
-  await hasta(`document.body.textContent.includes('Mi turno') || document.body.textContent.includes('MI TURNO')`);
-  const despues = await ev(`JSON.parse(localStorage.getItem('agustina-demo-v1')).turnos.find(t=>t.token==='demo-turno-lejos-0001')`);
-  chk('el turno cambió de horario y quedó registrado', despues.inicio !== antes && despues.cambios === 1);
-  await captura('10-cambio-hecho');
 
   // ------------------------------------------------------------------ 3. Cambio con menos de 24 h
   console.log('3. Cambio con menos de 24 h');
   await ir('reservar.html?t=demo-turno-cerca-0001');
   const t3 = await texto();
-  chk('mi turno: sin botón de cambiar y con aviso', !(await ev(`document.querySelector('[data-acc=cambiar]')`)) && t3.includes('Ya no se puede cambiar') && t3.includes('Cancelar por WhatsApp'));
+  chk('mi turno: sin botón de cambiar y con aviso', !(await ev(`document.querySelector('[data-acc=cambiar]')`)) && t3.includes('Cambiar o cancelar por WhatsApp'));
   await captura('11-mi-turno-menos-de-24h');
   const bloqueo = await ev(`(async()=>{const m=await import('./js/datos-demo.js');const L=await import('./js/logica.js');const d=m.crearDemo();const i=await d.publico.info();
     const mod=i.modalidades.find(x=>x.id==='virtual');let sl=null;for(let k=1;k<20&&!sl;k++){const dia=L.sumarDias(L.diaDe(Date.now()),k);sl=L.slotsLibres({mod,dia,ahora:Date.now(),bloqueos:i.bloqueos,ocupados:await d.publico.ocupado(dia,dia,null),anticipacionHoras:i.anticipacion_horas,horizonteDias:i.horizonte_dias})[0];}

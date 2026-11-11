@@ -29,7 +29,7 @@ const pasoTxt = (n) => `<span class="caps muted">Paso ${n} de 5</span>`;
 function reglasHtml(info) {
   return `<div class="card" style="padding:6px 16px">
     <div class="regla sm"><span class="n" style="background:var(--peach1);color:#B4592A">1</span><span class="g"><b>La seña no se devuelve nunca.</b></span></div>
-    <div class="regla sm"><span class="n" style="background:var(--lav1);color:#6E58B0">2</span><span class="g"><b>Podés cambiar el turno hasta ${info.horas_cambio} h antes.</b> Después, ya no.</span></div>
+    <div class="regla sm"><span class="n" style="background:var(--lav1);color:#6E58B0">2</span><span class="g"><b>Para cambiar o cancelar el turno, escribile a Agustina por WhatsApp.</b> Desde acá no se puede.</span></div>
     <div class="regla sm"><span class="n" style="background:#E3F3E8;color:var(--ok)">3</span><span class="g"><b>Para cancelar, escribile a Agustina</b> por WhatsApp. Desde acá no se puede cancelar.</span></div>
   </div>`;
 }
@@ -90,7 +90,7 @@ P_.modalidad = () => {
           <div class="sm" style="margin-top:12px;background:${on ? 'var(--peach-soft)' : 'var(--soft)'};border-radius:18px;padding:9px 13px">${esc(L.textoHorario(m))}</div>
         </button>`;
       }).join('')}
-      <p class="hand" style="font-size:21px;margin:4px 6px 0">¿Primera vez? Tranqui, después se puede cambiar.</p>
+      <p class="hand" style="font-size:21px;margin:4px 6px 0">¿Primera vez? Tranqui, cualquier duda le escribís.</p>
       <button class="cta" data-acc="seguir-modalidad" ${st.modalidad ? '' : 'disabled'}>Seguir</button>
     </div>`;
 };
@@ -209,15 +209,15 @@ P_.listo = () => {
     <div class="body">
       ${tarjetaTurno(t)}
       ${t.link_videollamada ? `<a class="cta white" style="margin:0 0 14px" href="${esc(t.link_videollamada)}" target="_blank" rel="noopener">${ico('video')}Link de la videollamada</a>` : ''}
-      <p class="xs" style="margin:0 6px">La seña no se devuelve · cambios hasta el <b>${esc(fmtLimite(t.limite_cambio))}</b> · para cancelar, escribile a Agustina.</p>
+      <p class="xs" style="margin:0 6px">La seña no se devuelve · para <b>cambiar o cancelar</b> el turno, escribile a Agustina por WhatsApp.</p>
       <div class="card flat" style="margin-top:14px">
         <div class="caps muted">Guardá tu link</div>
-        <div class="sm" style="margin:4px 0 10px">Con este link ves tu turno y lo podés cambiar.</div>
+        <div class="sm" style="margin:4px 0 10px">Con este link ves tu turno cuando quieras.</div>
         <div class="copybox" style="background:#fff"><span class="v sm" style="font-size:13px">${esc(linkMiTurno(st.token))}</span><button class="btn-oscuro" data-acc="copiar-link">${ico('copy')}Copiar</button></div>
       </div>
       ${!t.comprobante ? `<button class="cta white" data-acc="ir-comprobante">${ico('upload')}Subir el comprobante</button>` : ''}
-      <a class="cta" href="${esc(linkMiTurno(st.token))}">Ver o cambiar mi turno</a>
-      <a class="cta wa" style="margin-top:10px" href="${waCancelar(t)}" target="_blank" rel="noopener">${ico('chat')}Cancelar por WhatsApp</a>
+      <a class="cta" href="${esc(linkMiTurno(st.token))}">Ver mi turno</a>
+      <a class="cta wa" style="margin-top:10px" href="${waCancelar(t)}" target="_blank" rel="noopener">${ico('chat')}Cambiar o cancelar por WhatsApp</a>
     </div>`;
 };
 
@@ -235,13 +235,9 @@ P_.miturno = () => {
         ${t.link_videollamada && !pasado ? `<a class="li sm" href="${esc(t.link_videollamada)}" target="_blank" rel="noopener"><span class="ic s sky">${ico('video')}</span><span class="g"><b>Entrar a la videollamada</b></span>${ico('chev', 'muted')}</a>` : ''}
       </div>
       ${!cancelado && !t.comprobante && t.sena !== 'confirmada' && !pasado ? `<div class="card aviso"><div class="sm"><b>Seña: $ ${L.precio(t.sena_monto)}</b> al alias <b>${esc(t.alias)}</b></div><button class="cta chico white" style="margin-top:10px" data-acc="ir-comprobante">${ico('upload')}Subir el comprobante</button></div>` : ''}
-      ${cancelado || pasado ? '' : t.puede_cambiar
-        ? `<p class="sm" style="margin:0 6px">Podés cambiarlo hasta el <b>${esc(fmtLimite(t.limite_cambio))}</b>.</p>
-           <button class="cta" data-acc="cambiar">${ico('swap')}Cambiar día u horario</button>`
-        : `<div class="card flat" style="display:flex;gap:10px;align-items:center;background:#FCEFCF">${emo('enojo', 58, 'flex:none')}
-             <div class="sm"><span class="caps" style="color:var(--warn)">Faltan menos de ${t.horas_cambio} h</span><br><b>Ya no se puede cambiar.</b> Si no podés venir, escribile a Agustina.</div></div>`}
-      <a class="cta wa" style="margin-top:10px" href="${waCancelar(t)}" target="_blank" rel="noopener">${ico('chat')}${cancelado ? 'Escribirle a Agustina' : 'Cancelar por WhatsApp'}</a>
-      <p class="xs muted center" style="margin:14px 0 0">La seña no se devuelve. Para cancelar, hablá con Agustina.</p>
+      ${cancelado || pasado ? '' : `<div class="card flat" style="display:flex;gap:10px;align-items:center">${emo('alegria', 58, 'flex:none')}<div class="sm"><b>¿Necesitás cambiar el día u horario?</b><br>Escribile a Agustina por WhatsApp y lo coordinan.</div></div>`}
+      <a class="cta wa" style="margin-top:10px" href="${waCancelar(t)}" target="_blank" rel="noopener">${ico('chat')}${cancelado ? 'Escribirle a Agustina' : 'Cambiar o cancelar por WhatsApp'}</a>
+      <p class="xs muted center" style="margin:14px 0 0">La seña no se devuelve. Para cambiar o cancelar, hablá con Agustina.</p>
     </div>`;
 };
 

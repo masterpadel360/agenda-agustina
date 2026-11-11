@@ -700,7 +700,7 @@ A['ver-comprobante'] = async (b) => {
   v.addEventListener('click', () => v.remove());
   document.body.appendChild(v);
 };
-A['mandar-link'] = (b) => { const t = turnoDe(Number(b.dataset.id)), p = pac(t.paciente_id); window.open(L.linkWa(p.telefono, `Hola ${L.primerNombre(p.nombre)}! Acá podés ver tu turno y cambiarlo hasta ${S.ajustes.horas_cambio} h antes: ${linkTurno(t)}`), '_blank', 'noopener'); };
+A['mandar-link'] = (b) => { const t = turnoDe(Number(b.dataset.id)), p = pac(t.paciente_id); window.open(L.linkWa(p.telefono, `Hola ${L.primerNombre(p.nombre)}! Acá podés ver tu turno: ${linkTurno(t)} . Si necesitás cambiarlo o cancelarlo, escribime por acá.`), '_blank', 'noopener'); };
 // Mensaje lindo para mandar el link de reservas por WhatsApp (negritas con *, emojis simples).
 function mensajeReservas() {
   const a = S.ajustes || {};
@@ -718,8 +718,7 @@ function mensajeReservas() {
     '',
     '📌 *Tené en cuenta*',
     '• La seña no se reembolsa.',
-    `• Podés cambiar el turno hasta ${h} h antes, desde el link que te llega al confirmar.`,
-    '• Si necesitás cancelar, escribime por acá.',
+    '• Para cambiar o cancelar el turno, escribime por acá.',
     '',
     'Cualquier duda, consultame. ¡Te espero! 💜',
     `${a.nombre_publico || 'Lic. Agustina Arrieta'}`,

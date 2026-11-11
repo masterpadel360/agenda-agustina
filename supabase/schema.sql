@@ -602,7 +602,8 @@ grant execute on function public.retener(text, bigint, text) to anon, authentica
 grant execute on function public.soltar(text) to anon, authenticated;
 grant execute on function public.reservar(text, jsonb) to anon, authenticated;
 grant execute on function public.mi_turno(text) to anon, authenticated;
-grant execute on function public.cambiar_turno(text, text) to anon, authenticated;
+-- Los pacientes ya no cambian el turno solos: lo hace Agustina (pedido 11/2026).
+revoke execute on function public.cambiar_turno(text, text) from anon, public;
 grant execute on function public.registrar_comprobante(text, text) to anon, authenticated;
 revoke execute on function public.duena_crear_turno(bigint, bigint, text, bigint, int, text) from anon;
 revoke execute on function public.duena_mover_turno(bigint, bigint, text) from anon;
