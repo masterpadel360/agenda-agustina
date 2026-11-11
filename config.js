@@ -8,7 +8,7 @@
 // supabase/schema.sql. NUNCA pegues acá la "service_role" / "secret" key.
 // =====================================================================
 window.AGUSTINA_CONFIG = {
-  supabaseUrl: '',
-  supabaseAnonKey: '',
-  vapidPublic: '',
+  supabaseUrl: 'https://jmmdbhhbyycjpficzrob.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImptbWRiaGhieXljanBmaWN6cm9iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQzNTgxNTcsImV4cCI6MjEwOTkzNDE1N30.6-cvFtjj3D9lXIYr7hGuFCbCFzlBT5SH_hJ_339hmno',
+  vapidPublic: 'BGBTGQ-zSVQx6c5DlZQ9WnE1hHGWB5iZhsri9UDaZWMp0xLqUfZk-JxYyy87XAEsKcvGeQk7hxsGcX6A6JwERIA',
 };
