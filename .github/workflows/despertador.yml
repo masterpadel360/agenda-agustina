@@ -1,0 +1,27 @@
+# Despertador: una vez por día consulta la base de Supabase para que el plan gratis
+# no la pause por falta de uso. Lee la dirección y la clave pública de config.js
+# (la clave "anon" es pública por diseño). Si config.js está vacío (modo demo), no hace nada.
+name: Despertador de la base
+
+on:
+  schedule:
+    - cron: "17 11 * * *"   # todos los días 08:17 de Córdoba
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  despertar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Consultar la base
+        run: |
+          URL=$(grep -o "supabaseUrl: *'[^']*'" config.js | sed "s/.*'\(.*\)'/\1/")
+          KEY=$(grep -o "supabaseAnonKey: *'[^']*'" config.js | sed "s/.*'\(.*\)'/\1/")
+          if [ -z "$URL" ] || [ -z "$KEY" ]; then echo "Modo demo: nada que despertar."; exit 0; fi
+          CODE=$(curl -s -o /tmp/r.json -w "%{http_code}" -X POST "$URL/rest/v1/rpc/publico_info" \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d '{}')
+          echo "Respuesta: $CODE"
+          if [ "$CODE" -ge 400 ]; then cat /tmp/r.json; exit 1; fi
