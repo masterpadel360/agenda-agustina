@@ -39,7 +39,7 @@ const avisoTxt = (m) => (m == null ? '' : m === 0 ? 'Aviso a la hora' : m === 14
 
 function navBar(activo) {
   const it = (r, i, t) => `<a href="#${r}" class="${activo === r ? 'on' : ''}">${ico(i)}${t}</a>`;
-  return `<nav class="nav" aria-label="Secciones"><svg class="bg" viewBox="0 0 360 86" preserveAspectRatio="none" aria-hidden="true"><path d="M0 26H130C150 26 152 2 180 2S210 26 230 26H360V86H0z" fill="#fff"/><path d="M0 26H130C150 26 152 2 180 2S210 26 230 26H360" fill="none" stroke="#EFE9F1" stroke-width="1.5"/></svg>
+  return `<nav class="nav" aria-label="Secciones"><svg class="bg" viewBox="0 0 360 86" preserveAspectRatio="none" aria-hidden="true"><path d="M0 26H100C120 26 122 2 150 2S180 26 200 26H360V86H0z" fill="#fff"/><path d="M0 26H100C120 26 122 2 150 2S180 26 200 26H360" fill="none" stroke="#EFE9F1" stroke-width="1.5"/></svg>
     <div class="items">${it('hoy', 'home', 'Hoy')}${it('semana', 'cal', 'Semana')}<button class="mid" data-acc="mas" aria-label="${activo === 'vida' ? 'Nuevo evento' : 'Cargar turno'}">${ico('plus')}</button>${it('pacientes', 'users', 'Pacientes')}${it('vida', 'heart', 'Mi vida')}${it('ajustes', 'gear', 'Ajustes')}</div></nav>`;
 }
 const back = (href, txt) => `<a class="pillbtn" href="${href}">${ico('back')}${esc(txt)}</a>`;
