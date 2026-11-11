@@ -701,9 +701,33 @@ A['ver-comprobante'] = async (b) => {
   document.body.appendChild(v);
 };
 A['mandar-link'] = (b) => { const t = turnoDe(Number(b.dataset.id)), p = pac(t.paciente_id); window.open(L.linkWa(p.telefono, `Hola ${L.primerNombre(p.nombre)}! Acá podés ver tu turno y cambiarlo hasta ${S.ajustes.horas_cambio} h antes: ${linkTurno(t)}`), '_blank', 'noopener'); };
+// Mensaje lindo para mandar el link de reservas por WhatsApp (negritas con *, emojis simples).
+function mensajeReservas() {
+  const a = S.ajustes || {};
+  const h = a.horas_cambio || 24;
+  return [
+    '¡Hola! 🌿',
+    'Te comparto el link para reservar tu sesión:',
+    `👉 ${linkReservas()}`,
+    '',
+    '*¿Cómo reservar?*',
+    '1️⃣ Elegís si preferís la sesión *presencial* o *virtual*.',
+    '2️⃣ Elegís el día y el horario que te queden cómodos.',
+    '3️⃣ Completás tus datos.',
+    `4️⃣ Transferís la seña${a.alias ? ` al alias *${a.alias}*` : ''} y subís el comprobante. ¡Y listo!`,
+    '',
+    '📌 *Tené en cuenta*',
+    '• La seña no se reembolsa.',
+    `• Podés cambiar el turno hasta ${h} h antes, desde el link que te llega al confirmar.`,
+    '• Si necesitás cancelar, escribime por acá.',
+    '',
+    'Cualquier duda, consultame. ¡Te espero! 💜',
+    `${a.nombre_publico || 'Lic. Agustina Arrieta'}`,
+  ].join('\n');
+}
 A['copiar-link'] = async () => toast((await copiar(linkReservas())) ? 'Link copiado' : 'No se pudo copiar');
 A['compartir-link'] = async () => {
-  const texto = `Hola! Para reservar tu sesión entrá acá: ${linkReservas()}`;
+  const texto = mensajeReservas();
   if (navigator.share) { try { await navigator.share({ text: texto }); return; } catch (e) { if (e.name === 'AbortError') return; } }
   window.open(L.linkWa('', texto), '_blank', 'noopener');
 };
